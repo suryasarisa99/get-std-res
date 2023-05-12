@@ -1,8 +1,10 @@
 let express = require("express");
 let cors = require("cors");
-let Student = require("./model/student");
+// let Student = require("./model/student");
 let app = express();
 let mongoose = require("mongoose");
+let { getSchema } = require("./utils/schemaUtil");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
@@ -15,7 +17,7 @@ app.use(
 
 mongoose
   .connect(
-    "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/mydatabase?retryWrites=true&w=majority",
+    "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/Students?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -29,17 +31,22 @@ mongoose
   });
 
 app.get("/about", async (req, res) => {
-  res.send(`<h1>Created By Jaya Surya`);
+  res.send(`<h1>Created By Jaya Surya</h1>`);
 });
 app.get("/start", (req, res) => {
   res.json("started");
 });
 app.get("/:id", async (req, res) => {
-  let { id } = req.params;
-  console.log(id);
-  let obj = await Student.findOne({ regId: id });
-  if (obj) res.json(obj);
-  else res.json({ mssg: "InvalidRegId" });
+  try {
+    let { id } = req.params;
+    console.log(id);
+    let myModel = getSchema(id);
+    let obj = await myModel.findById(id);
+    if (obj) res.json(obj);
+    else res.json({ mssg: "InvalidRegId" });
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 app.get("/", (req, res) => {

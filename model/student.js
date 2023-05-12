@@ -1,7 +1,7 @@
 let { Schema, model } = require("mongoose");
 
 let studentSchema = new Schema({
-  regId: {
+  _id: {
     type: String,
     require: true,
   },
@@ -15,4 +15,4 @@ let studentSchema = new Schema({
   },
 });
 
-module.exports = model("student", studentSchema);
+module.exports = studentSchema;
