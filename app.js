@@ -37,7 +37,7 @@ app.get("/start", (req, res) => {
   res.json("started");
 });
 
-app.get("update/:id", async (req, res) => {
+app.post("update/:id", async (req, res) => {
   let { id } = req.params;
   let { name } = req.body;
   let student = await getSchema(id).findById(id);
