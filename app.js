@@ -27,8 +27,12 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
   });
+
 app.get("/about", async (req, res) => {
   res.send(`<h1>Created By Jaya Surya`);
+});
+app.get("/start", (req, res) => {
+  res.json("started");
 });
 app.get("/:id", async (req, res) => {
   let { id } = req.params;
