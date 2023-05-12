@@ -36,6 +36,18 @@ app.get("/about", async (req, res) => {
 app.get("/start", (req, res) => {
   res.json("started");
 });
+
+app.get("update/:id", async (req, res) => {
+  let { id } = req.params;
+  let { name } = req.body;
+  let student = getSchema(id).findById(id);
+  if (student) {
+    student.name = name;
+    student.save();
+    return res.json("updated Name");
+  } else return res.json("Invalid Registration Id");
+});
+
 app.get("/:id", async (req, res) => {
   try {
     let { id } = req.params;
