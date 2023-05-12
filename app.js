@@ -40,7 +40,7 @@ app.get("/start", (req, res) => {
 app.get("update/:id", async (req, res) => {
   let { id } = req.params;
   let { name } = req.body;
-  let student = getSchema(id).findById(id);
+  let student = await getSchema(id).findById(id);
   if (student) {
     student.name = name;
     student.save();
