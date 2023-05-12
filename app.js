@@ -7,6 +7,7 @@ let { getSchema } = require("./utils/schemaUtil");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
+app.use(express.json());
 
 app.use(
   cors({
@@ -37,13 +38,16 @@ app.get("/start", (req, res) => {
   res.json("started");
 });
 
-app.post("update/:id", async (req, res) => {
+app.post("/update/:id", async (req, res) => {
   let { id } = req.params;
   let { name } = req.body;
+  console.log(name);
   let student = await getSchema(id).findById(id);
+  // console.log(student);
   if (student) {
     student.name = name;
-    student.save();
+    console.log(student);
+    await student.save();
     return res.json("updated Name");
   } else return res.json("Invalid Registration Id");
 });

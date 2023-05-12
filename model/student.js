@@ -5,6 +5,9 @@ let studentSchema = new Schema({
     type: String,
     require: true,
   },
+  name: {
+    type: String,
+  },
   "1-2": {
     subjects: {},
     labs: {},
