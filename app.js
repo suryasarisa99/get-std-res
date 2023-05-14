@@ -76,7 +76,7 @@ app.get("/sub/:id", async (req, res) => {
 app.get("/update-name/:id/:name", async (req, res) => {
   let { id, name } = req.params;
   id = id.toUpperCase();
-  let student = getSchema(id).findById(id);
+  let student = await getSchema(id).findById(id);
   if (student) {
     student.name = name;
     student.save();
