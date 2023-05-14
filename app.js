@@ -49,14 +49,28 @@ app.post("/update/:id", async (req, res) => {
   } else return res.json("Invalid Registration Id");
 });
 
-app.lock("/lock/:id", async (req, res) => {
+app.get("update-lock/:id/", async (req, res) => {
   let { id } = req.params;
-  let { password } = req.body;
+  id = id.toUpperCase();
   let student = await getSchema(id).findById(id);
   if (student) {
-    student.password = password;
+    student.password = pass;
     student.save();
-    return res.json("updated Name");
+    return res.json("password is added");
+  } else return res.json("Invalid Registration Id");
+});
+
+app.get("/lock/:id", async (req, res) => {
+  let { id } = req.params;
+  let { pass } = req.body;
+
+  id = id.toUpperCase();
+  let student = await getSchema(id).findById(id);
+  if (student) {
+    if (student.password) return res.json("Already Locked");
+    student.password = pass;
+    student.save();
+    return res.json("isLocked");
   } else return res.json("Invalid Registration Id");
 });
 
@@ -65,6 +79,7 @@ app.get("/sub/:id", async (req, res) => {
     let { id } = req.params;
     id = id.toUpperCase();
     let student = await getSchema(id).findById(id);
+
     if (student)
       res.json({
         sem1: student["1-2"].subjects,
@@ -97,8 +112,11 @@ app.get("/:id", async (req, res) => {
     console.log(id);
     let myModel = getSchema(id);
     let obj = await myModel.findById(id);
-    if (obj) res.json(obj);
-    else res.json({ mssg: "InvalidRegId" });
+    if (obj) {
+      if (!obj?.password) {
+        res.json(obj);
+      } else return res.json("isLocked");
+    } else res.json({ mssg: "InvalidRegId" });
   } catch (err) {
     console.log(err.message);
   }

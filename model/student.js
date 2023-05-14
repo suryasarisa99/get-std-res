@@ -8,6 +8,9 @@ let studentSchema = new Schema({
   name: {
     type: String,
   },
+  password: {
+    type: String,
+  },
   "1-2": {
     subjects: {},
     labs: {},
