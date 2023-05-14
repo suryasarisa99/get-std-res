@@ -77,6 +77,8 @@ app.get("/update-name/:id/:name", async (req, res) => {
   let { id, name } = req.params;
   id = id.toUpperCase();
   let student = await getSchema(id).findById(id);
+  if (name === "_") name = "";
+  else name = name.replace("_", " ");
   if (student) {
     student.name = name;
     student.save();
