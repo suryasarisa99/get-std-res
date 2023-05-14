@@ -41,20 +41,52 @@ app.get("/start", (req, res) => {
 app.post("/update/:id", async (req, res) => {
   let { id } = req.params;
   let { name } = req.body;
-  console.log(name);
   let student = await getSchema(id).findById(id);
-  // console.log(student);
   if (student) {
     student.name = name;
-    console.log(student);
-    await student.save();
+    student.save();
     return res.json("updated Name");
   } else return res.json("Invalid Registration Id");
+});
+
+app.lock("/lock/:id", async (req, res) => {
+  let { id } = req.params;
+  let { password } = req.body;
+  let student = await getSchema(id).findById(id);
+  if (student) {
+    student.password = password;
+    student.save();
+    return res.json("updated Name");
+  } else return res.json("Invalid Registration Id");
+});
+
+app.get("/sub/:id", async (req, res) => {
+  try {
+    let { id } = req.params;
+    id = id.toUpperCase();
+    let myModel = getSchema(id);
+    let obj = await myModel.findById(id);
+    if (obj) res.json(obj.subjects);
+    else res.json({ mssg: "InvalidRegId" });
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+app.get("/update-name/:id/:name", async (req, res) => {
+  let { id, name } = req.params;
+  id = id.toUpperCase();
+  let student = getSchema(id).findById(id);
+  if (student) {
+    student.name = name;
+    student.save();
+  }
 });
 
 app.get("/:id", async (req, res) => {
   try {
     let { id } = req.params;
+    id = id.toUpperCase();
     console.log(id);
     let myModel = getSchema(id);
     let obj = await myModel.findById(id);
