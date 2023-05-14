@@ -60,10 +60,10 @@ app.get("update-lock/:id/", async (req, res) => {
   } else return res.json("Invalid Registration Id");
 });
 
-app.get("/lock/:id", async (req, res) => {
+app.post("/lock/:id", async (req, res) => {
   let { id } = req.params;
   let { pass } = req.body;
-
+  console.log(id, pass);
   id = id.toUpperCase();
   let student = await getSchema(id).findById(id);
   if (student) {
@@ -103,6 +103,24 @@ app.get("/update-name/:id/:name", async (req, res) => {
     student.save();
     return res.json("Name is Updated");
   } else return res.json("Invalid Registration Id");
+});
+
+app.post("/:id", async (req, res) => {
+  try {
+    let { id } = req.params;
+    let { pass } = req.body;
+    id = id.toUpperCase();
+    console.log("post :id", id, pass);
+    let myModel = getSchema(id);
+    let obj = await myModel.findById(id);
+    if (obj) {
+      if (pass == obj.password) {
+        return res.json(obj);
+      } else return res.json({ mssg: "passwordNotMatch" });
+    } else res.json({ mssg: "InvalidRegId" });
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 app.get("/:id", async (req, res) => {
