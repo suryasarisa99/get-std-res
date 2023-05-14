@@ -80,7 +80,8 @@ app.get("/update-name/:id/:name", async (req, res) => {
   if (student) {
     student.name = name;
     student.save();
-  }
+    return res.json("Name is Updated");
+  } else return res.json("Invalid Registration Id");
 });
 
 app.get("/:id", async (req, res) => {
