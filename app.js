@@ -64,11 +64,15 @@ app.get("/sub/:id", async (req, res) => {
   try {
     let { id } = req.params;
     id = id.toUpperCase();
-    let myModel = getSchema(id);
-    let obj = await myModel.findById(id);
-    if (obj) res.json(obj.subjects);
+    let student = await getSchema(id).findById(id);
+    if (student)
+      res.json({
+        sem1: student["1-2"].subjects,
+        sem2: student["2-1"].subjects,
+      });
     else res.json({ mssg: "InvalidRegId" });
   } catch (err) {
+    return res.json("Error Occured");
     console.log(err.message);
   }
 });
