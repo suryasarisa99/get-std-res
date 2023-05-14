@@ -115,7 +115,7 @@ app.get("/:id", async (req, res) => {
     if (obj) {
       if (!obj?.password) {
         res.json(obj);
-      } else return res.json("isLocked");
+      } else return res.json({ mssg: "isLocked" });
     } else res.json({ mssg: "InvalidRegId" });
   } catch (err) {
     console.log(err.message);
