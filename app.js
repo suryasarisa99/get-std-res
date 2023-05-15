@@ -49,13 +49,20 @@ app.post("/update/:id", async (req, res) => {
   } else return res.json("Invalid Registration Id");
 });
 
-app.get("update-lock/:id/", async (req, res) => {
+app.post("/update-lock/:id", async (req, res) => {
   let { id } = req.params;
+  let { oldPass, newPass } = req.body;
   id = id.toUpperCase();
+  console.log(id, oldPass, newPass);
   let student = await getSchema(id).findById(id);
   if (student) {
-    student.password = pass;
-    student.save();
+    if (student.password === oldPass) {
+      student.password = newPass;
+      student.save();
+      if (newPass === "") return res.json({ mssg: "removedPassword" });
+    } else {
+      return res.json({ mssg: "PasswordNotMatch" });
+    }
     return res.json("password is added");
   } else return res.json("Invalid Registration Id");
 });
@@ -63,7 +70,7 @@ app.get("update-lock/:id/", async (req, res) => {
 app.post("/lock/:id", async (req, res) => {
   let { id } = req.params;
   let { pass } = req.body;
-  console.log(id, pass);
+  // console.log(id, pass);
   id = id.toUpperCase();
   let student = await getSchema(id).findById(id);
   if (student) {
@@ -74,43 +81,43 @@ app.post("/lock/:id", async (req, res) => {
   } else return res.json("Invalid Registration Id");
 });
 
-app.get("/sub/:id", async (req, res) => {
-  try {
-    let { id } = req.params;
-    id = id.toUpperCase();
-    let student = await getSchema(id).findById(id);
+// app.get("/sub/:id", async (req, res) => {
+//   try {
+//     let { id } = req.params;
+//     id = id.toUpperCase();
+//     let student = await getSchema(id).findById(id);
 
-    if (student)
-      res.json({
-        sem1: student["1-2"].subjects,
-        sem2: student["2-1"].subjects,
-      });
-    else res.json({ mssg: "InvalidRegId" });
-  } catch (err) {
-    return res.json("Error Occured");
-    console.log(err.message);
-  }
-});
+//     if (student)
+//       res.json({
+//         sem1: student["1-2"].subjects,
+//         sem2: student["2-1"].subjects,
+//       });
+//     else res.json({ mssg: "InvalidRegId" });
+//   } catch (err) {
+//     return res.json("Error Occured");
+//     console.log(err.message);
+//   }
+// });
 
-app.get("/update-name/:id/:name", async (req, res) => {
-  let { id, name } = req.params;
-  id = id.toUpperCase();
-  let student = await getSchema(id).findById(id);
-  if (name === "_") name = "";
-  else name = name.replace("_", " ");
-  if (student) {
-    student.name = name;
-    student.save();
-    return res.json("Name is Updated");
-  } else return res.json("Invalid Registration Id");
-});
+// app.get("/update-name/:id/:name", async (req, res) => {
+//   let { id, name } = req.params;
+//   id = id.toUpperCase();
+//   let student = await getSchema(id).findById(id);
+//   if (name === "_") name = "";
+//   else name = name.replace("_", " ");
+//   if (student) {
+//     student.name = name;
+//     student.save();
+//     return res.json("Name is Updated");
+//   } else return res.json("Invalid Registration Id");
+// });
 
 app.post("/:id", async (req, res) => {
   try {
     let { id } = req.params;
     let { pass } = req.body;
     id = id.toUpperCase();
-    console.log("post :id", id, pass);
+    // console.log("post :id", id, pass);
     let myModel = getSchema(id);
     let obj = await myModel.findById(id);
     if (obj) {
