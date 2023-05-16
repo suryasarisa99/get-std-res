@@ -18,7 +18,6 @@ app.use(
     // allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
 mongoose
   .connect(
     "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/Students?retryWrites=true&w=majority",
