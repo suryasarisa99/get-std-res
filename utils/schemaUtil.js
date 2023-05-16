@@ -1,6 +1,7 @@
 let { model } = require("mongoose");
 let studentSchema = require("../model/student");
 let multer = require("multer");
+let path = require("path");
 function getSchema(id) {
   let branchId = id.substring(6, 8);
   let startYear = id.substring(0, 2);
@@ -11,8 +12,8 @@ function getSchema(id) {
 }
 
 let storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "/phots"),
-  filename: (req, file, cb) => cb(null, Date.now() + file.originalname),
+  destination: (req, file, cb) => cb(null, path.join(__dirname, "../photos")),
+  filename: (req, file, cb) => cb(null, file.originalname),
 });
 let getBranch = {
   "01": "CIVIL",
@@ -25,4 +26,5 @@ let getBranch = {
 
 module.exports = {
   getSchema,
+  storage,
 };

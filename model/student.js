@@ -11,6 +11,9 @@ let studentSchema = new Schema({
   password: {
     type: String,
   },
+  photo: {
+    type: String,
+  },
   "1-2": {
     subjects: {},
     labs: {},
