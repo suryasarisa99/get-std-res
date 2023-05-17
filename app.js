@@ -11,7 +11,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://stdn-res.vercel.app"],
+    origin: [
+      "https://stdn-res.vercel.app",
+      "http://localhost:3000",
+      "http://192.168.0.169:3000",
+    ],
     // origin: "*",
     methods: "GET, POST",
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -41,13 +45,14 @@ app.get("/start", (req, res) => {
 
 app.post("/update/:id", async (req, res) => {
   let { id } = req.params;
-  let { name } = req.body;
+  // let { fname,sname,l } = req.body;
   let student = await getSchema(id).findById(id);
   if (student) {
-    student.name = name;
+    student.name = req.body;
     student.save();
     return res.json("updated Name");
   } else return res.json("Invalid Registration Id");
+  res.json("sample");
 });
 
 app.post("/update-lock/:id", async (req, res) => {

@@ -6,7 +6,9 @@ let studentSchema = new Schema({
     require: true,
   },
   name: {
-    type: String,
+    fname: String,
+    sname: String,
+    lname: String,
   },
   password: {
     type: String,
