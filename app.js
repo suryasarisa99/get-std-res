@@ -1,15 +1,15 @@
 let express = require("express");
 let cors = require("cors");
-// let Student = require("./model/student");
 let app = express();
 let mongoose = require("mongoose");
-let { getSchema, storage } = require("./utils/schemaUtil");
+let { getSchema } = require("./utils/schemaUtil");
 let multer = require("multer");
 let path = require("path");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 app.use(express.json());
-let upload = multer({ storage });
+
 app.use(
   cors({
     // origin: ["http://localhost:4000"],
@@ -68,21 +68,18 @@ app.post("/update-lock/:id", async (req, res) => {
     return res.json("password is added");
   } else return res.json("Invalid Registration Id");
 });
-app.post("/photo/:id", upload.single("photo"), async (req, res) => {
+app.post("/photo/:id", async (req, res) => {
   console.log("post--photo");
   let { id } = req.params;
+  let { photo } = req.body;
   let student = await getSchema(id).findById(id);
   if (student) {
-    student.photo = req.file.originalname;
+    student.photo = photo;
     student.save();
   }
   return res.json("sample");
 });
 
-app.get("/photo/:photoName", async (req, res) => {
-  let { photoName } = req.params;
-  res.sendFile(path.join(__dirname, "photos", photoName));
-});
 app.post("/lock/:id", async (req, res) => {
   let { id } = req.params;
   let { pass } = req.body;
