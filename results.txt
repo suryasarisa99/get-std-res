@@ -1,0 +1,93 @@
+{
+  "name": {
+    "fname": "",
+    "sname": "",
+    "lname": ""
+  },
+  "1-2": {
+    "subjects": {
+      "MATHEMATICS-II": {
+        "grade": "C",
+        "internals": "24"
+      },
+      "APPLIED CHEMISTRY": {
+        "grade": "C",
+        "internals": "25"
+      },
+      "COMPUTER ORGANIZATION": {
+        "grade": "B",
+        "internals": "26"
+      },
+      "DATA STRUCTURES": {
+        "grade": "C",
+        "internals": "24"
+      },
+      "PYTHON PROGRAMMING": {
+        "grade": "A+",
+        "internals": "26"
+      }
+    },
+    "labs": {
+      "APPLIED CHEMISTRY LABORATORY": {
+        "grade": "A+",
+        "internals": "15"
+      },
+      "DATA STRUCTURES LABORATORY": {
+        "grade": "A+",
+        "internals": "15"
+      },
+      "PYTHON PROGRAMMING LABORATORY": {
+        "grade": "A+",
+        "internals": "15"
+      }
+    }
+  },
+  "2-1": {
+    "subjects": {
+      "MATHEMATICS-III": {
+        "grade": "A",
+        "internals": "25"
+      },
+      "OBJECT ORIENTED PROGRAMMING THROUGH C++": {
+        "grade": "B",
+        "internals": "28"
+      },
+      "OPERATING SYSTEMS": {
+        "grade": "C",
+        "internals": "24"
+      },
+      "SOFTWARE ENGINEERING": {
+        "grade": "C",
+        "internals": "27"
+      },
+      "MATHEMATICAL FOUNDATIONS OF COMPUTER SCI": {
+        "grade": "B",
+        "internals": "25"
+      }
+    },
+    "labs": {
+      "COMMUNITY SERVICES PROJECT": {
+        "grade": "A+",
+        "internals": "0"
+      },
+      "OBJECT ORIENTED PROGRAMMING THROUGH C++": {
+        "grade": "A+",
+        "internals": "14"
+      },
+      "OPERATING SYSTEMS LAB": {
+        "grade": "A+",
+        "internals": "14"
+      },
+      "SOFTWARE ENGINEERING LAB": {
+        "grade": "A+",
+        "internals": "14"
+      },
+      "APPLICATIONS OF PYTHON-NUMPY(SKILL ORIEN": {
+        "grade": "A+",
+        "internals": "0"
+      }
+    }
+  },
+  "_id": "21U41A0504",
+  "__v": 0
+}

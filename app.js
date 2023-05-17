@@ -4,7 +4,7 @@ let app = express();
 let mongoose = require("mongoose");
 let { getSchema } = require("./utils/schemaUtil");
 let path = require("path");
-
+let fs = require("fs/promises");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 app.use(express.json());
@@ -71,6 +71,16 @@ app.post("/update-lock/:id", async (req, res) => {
     }
     return res.json("password is added");
   } else return res.json("Invalid Registration Id");
+});
+app.get("/download/:id", async (req, res) => {
+  let { id } = req.params;
+  id = id.toUpperCase();
+  let myModel = getSchema(id);
+  let obj = await myModel.findById(id);
+  if (obj) {
+    await fs.writeFile("results.txt", JSON.stringify(obj, null, 2));
+    res.download("results.txt");
+  } else res.json({ mssg: "InvalidRegId" });
 });
 app.post("/photo/:id", async (req, res) => {
   console.log("post--photo");
