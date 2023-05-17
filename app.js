@@ -3,7 +3,6 @@ let cors = require("cors");
 let app = express();
 let mongoose = require("mongoose");
 let { getSchema } = require("./utils/schemaUtil");
-let multer = require("multer");
 let path = require("path");
 
 app.use(express.urlencoded({ extended: false }));
@@ -12,10 +11,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    // origin: ["http://localhost:4000"],
-    origin: "*",
+    origin: ["https://stdn-res.vercel.app"],
+    // origin: "*",
     methods: "GET, POST",
-    // allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 mongoose
