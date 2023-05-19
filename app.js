@@ -17,7 +17,7 @@ app.use(
     //   "http://192.168.0.169:3000",
     // ],
     origin: "*",
-    methods: "GET, POST",
+    methods: "GET, POST, DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -90,8 +90,18 @@ app.post("/photo/:id", async (req, res) => {
   if (student) {
     student.photo = photo;
     student.save();
+    return res.json("added-photo");
   }
   return res.json("sample");
+});
+app.delete("/photo/:id", async (req, res) => {
+  let { id } = req.params;
+  let student = await getSchema(id).findById(id);
+  if (student) {
+    student.photo = "";
+    student.save();
+    return res.json("deleted-photo");
+  } else res.json("id-not-found");
 });
 
 app.post("/lock/:id", async (req, res) => {
