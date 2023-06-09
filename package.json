@@ -1,7 +1,6 @@
 {
   "name": "exp",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -21,5 +20,14 @@
   },
   "devDependencies": {
     "@babel/helper-compilation-targets": "^7.21.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suryasarisa99/get-std-res.git"
+  },
+  "bugs": {
+    "url": "https://github.com/suryasarisa99/get-std-res/issues"
+  },
+  "homepage": "https://github.com/suryasarisa99/get-std-res#readme",
+  "description": ""
 }

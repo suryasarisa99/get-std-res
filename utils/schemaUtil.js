@@ -2,13 +2,14 @@ let { model } = require("mongoose");
 let studentSchema = require("../model/student");
 let multer = require("multer");
 let path = require("path");
+
 function getSchema(id) {
   let branchId = id.substring(6, 8);
   let startYear = id.substring(0, 2);
   let isLe = id.substring(4, 6);
   startYear = isLe == "5A" ? startYear - 1 : startYear;
 
-  return model(getBranch[branchId] + startYear, studentSchema);
+  return model(startYear + getBranch[branchId], studentSchema);
 }
 
 let storage = multer.diskStorage({
@@ -27,4 +28,5 @@ let getBranch = {
 module.exports = {
   getSchema,
   storage,
+  studentSchema,
 };

@@ -2,9 +2,10 @@ let express = require("express");
 let cors = require("cors");
 let app = express();
 let mongoose = require("mongoose");
-let { getSchema } = require("./utils/schemaUtil");
+let { getSchema, studentSchema } = require("./utils/schemaUtil");
 let path = require("path");
 let fs = require("fs/promises");
+// let model = require("./model/student");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use(
 );
 mongoose
   .connect(
-    "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/Students?retryWrites=true&w=majority",
+    "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/Student?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -116,6 +117,15 @@ app.post("/lock/:id", async (req, res) => {
     student.save();
     return res.json("isLocked");
   } else return res.json("Invalid Registration Id");
+});
+
+app.get("/ays/:x", async (req, res) => {
+  let yearId = req.params.x;
+  console.log(yearId);
+  let analysis = await mongoose
+    .model("analysis" + yearId, studentSchema)
+    .find();
+  res.json(analysis);
 });
 
 // app.get("/sub/:id", async (req, res) => {
