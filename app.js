@@ -162,6 +162,7 @@ app.post("/:id", async (req, res) => {
     let { id } = req.params;
     let { pass } = req.body;
     id = id.toUpperCase();
+    console.log(id);
     // console.log("post :id", id, pass);
     let myModel = getSchema(id);
     let obj = await myModel.findById(id);
