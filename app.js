@@ -8,7 +8,6 @@ let path = require("path");
 require("dotenv");
 let fs = require("fs/promises");
 const jwt = require("jsonwebtoken");
-c;
 // let model = require("./model/student");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
