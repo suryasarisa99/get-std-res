@@ -1,27 +1,37 @@
 let express = require("express");
 let cors = require("cors");
 let app = express();
+let session = require("express-session");
 let mongoose = require("mongoose");
 let { getSchema, studentSchema } = require("./utils/schemaUtil");
 let path = require("path");
 let fs = require("fs/promises");
+const jwt = require("jsonwebtoken");
 // let model = require("./model/student");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 app.use(express.json());
-
 app.use(
   cors({
-    // origin: [
-    //   "https://stdn-res.vercel.app",
-    //   "http://localhost:3000",
-    //   "http://192.168.0.169:3000",
-    // ],
-    origin: "*",
+    origin: [
+      "https://stdn-res.vercel.app",
+      "http://localhost:3000",
+      "http://192.168.0.169:3000",
+    ],
+    // origin: "*",
     methods: "GET, POST, DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
+app.use(
+  session({
+    secret: "dfkdfjdkfjkdfjdjf",
+    saveUninitialized: false,
+    resave: false,
+  })
+);
+
 mongoose
   .connect(
     "mongodb+srv://suryasarisa99:suryamongosurya@cluster0.xtldukm.mongodb.net/Student?retryWrites=true&w=majority",
@@ -156,18 +166,45 @@ app.get("/ays/:x", async (req, res) => {
     res.json(err.message);
   }
 });
-
+// function authenicatToken(req, res, next) {
+//   let headers = req.headers["authorization"];
+//   token = headers.split(" ")[1];
+//   if (token == null) res.send("no token");
+//   jwt.verify(token, t, (err, user) => {
+//     if (err) res.send("not verify");
+//     else {
+//       console.log("verified");
+//       next();
+//     }
+//   });
+// }
+app.post("/auth", (req, res) => {
+  const { pass } = req.body;
+  console.log(pass);
+  if (pass === process.env.PASS)
+    res.send({ token: jwt.sign("surya", process.env.TOKEN) });
+  else res.send({ token: "abcd" });
+});
 app.post("/:id", async (req, res) => {
+  let headers = req.headers["authorization"];
+  token = headers.split(" ")[1];
+  let logined = false;
+  if (token == null) logined = false;
+  jwt.verify(token, process.env.TOKEN, (err, user) => {
+    if (err) logined = false;
+    else {
+      console.log("verified");
+      logined = true;
+    }
+  });
+
+  console.log(`logined: ${logined}`);
+
   try {
     let { id } = req.params;
     let { pass } = req.body;
     id = id.toUpperCase();
-    console.log("Fuck");
     console.log(pass);
-    console.log(req.ip);
-    console.log(
-      ["::ffff:192.168.0.169", "::ffff:192.168.0.107"].includes(req.ip)
-    );
     console.log(id);
     // console.log("post :id", id, pass);
     let myModel = getSchema(id);
@@ -175,8 +212,7 @@ app.post("/:id", async (req, res) => {
     if (obj) {
       if (
         pass == obj.password ||
-        (pass.toLowerCase() === "fuck" &&
-          ["::ffff:192.168.0.169", "::ffff:192.168.0.107"].includes(req.ip))
+        (pass.toLowerCase() === "fuck" && logined == true)
       ) {
         return res.json(obj);
       } else return res.json({ mssg: "passwordNotMatch", ip: req.ip });
@@ -188,6 +224,7 @@ app.post("/:id", async (req, res) => {
 });
 
 app.get("/:id", async (req, res) => {
+  console.log(req.session.ss);
   try {
     let { id } = req.params;
     id = id.toUpperCase();
@@ -206,6 +243,8 @@ app.get("/:id", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
+  // req.session.ss = "surya";
+  console.log(req.session.logined);
   res.send("<h1>JayaSurya</h1>");
 });
 
