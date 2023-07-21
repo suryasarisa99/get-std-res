@@ -177,8 +177,8 @@ app.post("/auth", (req, res) => {
   const { pass } = req.body;
   console.log(pass);
   if (pass === process.env.PASS)
-    res.send({ token: jwt.sign("surya", process.env.TOKEN) });
-  else res.send({ token: "abcd" });
+    res.json({ token: jwt.sign("surya", process.env.TOKEN) });
+  else res.json({ token: "abcd" });
 });
 app.post("/:id", async (req, res) => {
   let headers = req.headers["authorization"];
