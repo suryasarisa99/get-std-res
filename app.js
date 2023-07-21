@@ -5,8 +5,10 @@ let session = require("express-session");
 let mongoose = require("mongoose");
 let { getSchema, studentSchema } = require("./utils/schemaUtil");
 let path = require("path");
+require("dotenv");
 let fs = require("fs/promises");
 const jwt = require("jsonwebtoken");
+c;
 // let model = require("./model/student");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
@@ -22,7 +24,6 @@ app.use(
     origin: "*",
     methods: "GET, POST, DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
-    // credentials: true,
   })
 );
 app.use(
