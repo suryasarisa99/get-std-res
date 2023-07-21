@@ -179,7 +179,7 @@ app.post("/:id", async (req, res) => {
           ["::ffff:192.168.0.169", "::ffff:192.168.0.107"].includes(req.ip))
       ) {
         return res.json(obj);
-      } else return res.json({ mssg: "passwordNotMatch" });
+      } else return res.json({ mssg: "passwordNotMatch", ip: req.ip });
     } else res.json({ mssg: "InvalidRegId" });
   } catch (err) {
     console.log(err.message);
