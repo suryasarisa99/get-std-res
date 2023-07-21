@@ -162,6 +162,12 @@ app.post("/:id", async (req, res) => {
     let { id } = req.params;
     let { pass } = req.body;
     id = id.toUpperCase();
+    console.log("Fuck");
+    console.log(pass);
+    console.log(req.ip);
+    console.log(
+      ["::ffff:192.168.0.169", "::ffff:192.168.0.107"].includes(req.ip)
+    );
     console.log(id);
     // console.log("post :id", id, pass);
     let myModel = getSchema(id);
