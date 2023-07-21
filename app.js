@@ -14,13 +14,13 @@ app.use(express.static("./public"));
 app.use(express.json());
 app.use(
   cors({
-    // origin: [
-    //   "https://stdn-res.vercel.app",
-    //   "https://s546.vercel.app",
-    //   // "http://localhost:3000",
-    //   // "http://192.168.0.169:3000",
-    // ],
-    origin: "*",
+    origin: [
+      "https://stdn-res.vercel.app",
+      "https://s546.vercel.app",
+      // "http://localhost:3000",
+      // "http://192.168.0.169:3000",
+    ],
+    // origin: "*",
     methods: "GET, POST, DELETE",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
