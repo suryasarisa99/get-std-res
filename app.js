@@ -1,7 +1,7 @@
 let express = require("express");
 let cors = require("cors");
 let app = express();
-let session = require("express-session");
+// let session = require("express-session");
 let mongoose = require("mongoose");
 let { getSchema, studentSchema } = require("./utils/schemaUtil");
 let path = require("path");
@@ -23,13 +23,6 @@ app.use(
     origin: "*",
     methods: "GET, POST, DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-app.use(
-  session({
-    secret: "dfkdfjdkfjkdfjdjf",
-    saveUninitialized: false,
-    resave: false,
   })
 );
 
@@ -225,7 +218,7 @@ app.post("/:id", async (req, res) => {
 });
 
 app.get("/:id", async (req, res) => {
-  console.log(req.session.ss);
+  // console.log(req.session.ss);
   try {
     let { id } = req.params;
     id = id.toUpperCase();
@@ -245,7 +238,7 @@ app.get("/:id", async (req, res) => {
 
 app.get("/", (req, res) => {
   // req.session.ss = "surya";
-  console.log(req.session.logined);
+  // console.log(req.session.logined);
   res.send("<h1>JayaSurya</h1>");
 });
 
